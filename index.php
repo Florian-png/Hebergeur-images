@@ -1,38 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title> Hébergeur d'images </title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="css/style.css">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+
+</head>
+<body>
+
+<div class="container text-align">
 <?php
-
-// Projet hébergeur d'image
-// La personne envoie une image et on l'affiche après
-
-// img src="uploads/$files..."
-if(isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
-
-  if($_FILES['image']['size'] <= 2000000){
-
-    $informations = pathinfo($_FILES['image']['name']);
-
-    $extensionFichier = $informations['extension'];
-
-    $extensionAutorisee = array('png','jpg','gif','JPEG');
-
-    if(in_array($extensionFichier, $extensionAutorisee)) {
-
-      // Si tout est bon, alors on envoie
-      // Ne pas oubliez de concatener le point pour l'ajout de l'extension
-      $addresse = 'uploads/'.time().rand().'.'.$extensionFichier;
-
-      move_uploaded_file($_FILES['image']['tmp_name'], $addresse);
-
-     echo "L'envoie du fichier ".$addresse." est bon.";
-    }
-  }
-}
-
+require("lib/traitement.php");
 
 
 
   echo '<form action="index.php" method="POST" enctype="multipart/form-data">
 
-          <h1> Bienvenue dans votre hébergeur d"images </h1>
+          <h1> Bienvenue dans votre hébergeur images </h1>
 
           <input type="file" name="image" required>
 
@@ -43,17 +31,17 @@ if(isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
           </form>';
 
 
-   if($_FILES['image']['error'] == 0) {
-    echo '
-          <img src="'.$addresse.'">
-          <input type="text" value="http://localhost/'.$addresse.'">
-        '; // Ne pas oubliez de concaténer avant et après
-          // On peut également intégrer l'adresse du fichier
-
-          // Next => Modifation CSS de l'image pour qu'elle soit toutes de la même taille / Connection BDD pour afficher toutes les images du même user
-  }
 
 
+require("lib/renvoie.php");
 
 
  ?>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+</body>
+</html>
